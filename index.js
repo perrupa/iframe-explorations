@@ -1,7 +1,7 @@
 const express    = require('express')
 const bodyParser = require('body-parser')
-var jsonParser   = bodyParser.json()
-var handlebars   = require('express-handlebars')
+const jsonParser   = bodyParser.json()
+const handlebars   = require('express-handlebars')
                     .create({defaultLayout: 'html'});
 
 const hostServer    = express()
