@@ -1,0 +1,14 @@
+<h1>Host Server</h1>
+<form action="{{ clientURL }}" target="iframe" method="post">
+  <textarea name="text" id="text" cols="30" rows="10">{{ json }}</textarea>
+  <button type="submit">Post</button>
+</form>
+
+
+<iframe
+  src="{{clientURL}}"
+  name='iframe'
+  frameborder="1"
+  height=300
+  width=500
+  ></iframe>
