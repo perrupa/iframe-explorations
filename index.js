@@ -1,10 +1,9 @@
 const express    = require('express')
 const bodyParser = require('body-parser')
-const jsonParser   = bodyParser.json()
-const handlebars   = require('express-handlebars')
-                    .create({defaultLayout: 'html'});
+const jsonParser = bodyParser.json()
+const handlebars = require('express-handlebars').create({defaultLayout: 'html'});
 
-const hostServer    = express()
+const hostServer = express()
 const app        = express()
 
 // form parser
@@ -16,14 +15,14 @@ hostServer.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
 hostServer.set('view engine', 'handlebars')
 
-dummyJSON = {
+const dummyJSON = {
   type: "Dog",
   name: "Hamburger",
   age: 6,
 }
 
-const shopifyController = (_, response) =>
-  response.render('host', {
+const hostController = view => (_, response) =>
+  response.render(view, {
     json: JSON.stringify(dummyJSON, null, 2),
     clientURL: "http://localhost:3000/client"
   })
@@ -39,15 +38,15 @@ const appController = (request, response) => {
   response.render('app', postData)
 }
 
-
-// Shopify Routes
-hostServer.get('/', shopifyController)
+// Host Routes
+hostServer.get('/', hostController('host'))
+hostServer.get('/2', hostController('host2'))
 
 // App Routes
 app.get('/client', (_, response) => response.render('app') )
 app.post('/client', appController)
 
 // Start the Servers
-hostServer.listen(8000, () => console.log('Shopify listening on port 8000!') )
+hostServer.listen(8000, () => console.log('Host Server listening on port 8000!') )
 app.listen(3000, () => console.log('Example app listening on port 3000!') )
 
