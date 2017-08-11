@@ -4,15 +4,15 @@ const jsonParser = bodyParser.json()
 const handlebars = require('express-handlebars').create({defaultLayout: 'html'});
 
 const hostServer = express()
-const app        = express()
+const appClient  = express()
 
 // form parser
-app.use(bodyParser.urlencoded({ extended: false }))
+appClient.use(bodyParser.urlencoded({ extended: false }))
 
 // Handlebars
-app.engine('handlebars', handlebars.engine)
+appClient.engine('handlebars', handlebars.engine)
 hostServer.engine('handlebars', handlebars.engine)
-app.set('view engine', 'handlebars')
+appClient.set('view engine', 'handlebars')
 hostServer.set('view engine', 'handlebars')
 
 const dummyJSON = {
@@ -42,11 +42,11 @@ const appController = (request, response) => {
 hostServer.get('/', hostController('host'))
 hostServer.get('/2', hostController('host2'))
 
-// App Routes
-app.get('/client', (_, response) => response.render('app') )
-app.post('/client', appController)
+// appClient Routes
+appClient.get('/client', (_, response) => response.render('appClient') )
+appClient.post('/client', appController)
 
 // Start the Servers
-hostServer.listen(8000, () => console.log('Host Server listening on port 8000!') )
-app.listen(3000, () => console.log('Example app listening on port 3000!') )
+hostServer.listen(8000, () => console.log('Host Server running on http://localhost:8000/') )
+appClient.listen(3000, () => console.log('Example appClient running on http://localhost:3000/client') )
 
