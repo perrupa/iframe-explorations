@@ -1,0 +1,53 @@
+<h1>Host Server</h1>
+
+<textarea name="text" id="text" cols="30" rows="10">{{ json }}</textarea>
+
+<button id="btn">Post</button>
+
+<form action="" target="iframe" method="post"></form>
+
+<iframe
+  name='iframe'
+  frameborder="1"
+  height=300
+  width=500
+></iframe>
+
+
+<script>
+  var clientURL = "{{ clientURL }}";
+
+  function createForm(json) {
+    var form = document.createElement('form')
+    form.action = clientURL
+    form.method = "post"
+    // form.target = "iframe"
+
+    json = (typeof json === 'string' ? JSON.parse(json) : json);
+
+    var field = document.createElement("input");
+    field.setAttribute("type", "hidden");
+    field.setAttribute("name", 'text');
+    field.setAttribute("value", JSON.stringify(json));
+
+    form.appendChild(field);
+
+    return form;
+  }
+
+  var btn = document.querySelector('#btn')
+  var textArea = document.querySelector('#text')
+  var iframe = document.querySelector('[name=iframe]')
+
+  var form = createForm(textArea.value)
+  form.target = iframe.name;
+
+  // submit when button is clicked
+  btn.onclick = evt => {
+    // https://stackoverflow.com/a/42081856
+    document.body.appendChild(form);
+    form.submit()
+  };
+
+</script>
+

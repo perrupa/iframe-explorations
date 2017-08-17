@@ -41,9 +41,10 @@ const appController = (request, response) => {
 // Host Routes
 hostServer.get('/', hostController('host'))
 hostServer.get('/2', hostController('host2'))
+hostServer.get('/3', hostController('host3'))
 
 // appClient Routes
-appClient.get('/client', (_, response) => response.render('appClient') )
+appClient.get('/client', (_, response) => response.render('app') )
 appClient.post('/client', appController)
 
 // Start the Servers
